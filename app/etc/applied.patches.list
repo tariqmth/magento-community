@@ -1,0 +1,7 @@
+-e -n 2015-07-10 02:30:26 UTC | SUPEE-2725 | EE_1.9.1.1 | v1 | 50d876b85c8e0bd3bbd2d97324da09e8a7ba78ff | Wed Mar 19 15:24:11 2014 +0200 | v1.9.1.1..HEAD
+patching file app/code/core/Mage/Payment/Model/Method/Cc.php
+patching file js/prototype/validation.js
+Hunk #1 succeeded at 625 (offset 5 lines).
+Hunk #2 succeeded at 807 (offset 5 lines).
+
+
