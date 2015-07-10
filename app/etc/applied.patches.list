@@ -10,3 +10,9 @@ patching file app/code/core/Mage/Adminhtml/Block/Dashboard/Graph.php
 patching file app/code/core/Mage/Adminhtml/controllers/DashboardController.php
 
 
+-e -n 2015-07-10 02:40:19 UTC | SUPEE-5390 | EE_1.10.1.0 | v1 | 6b4151716e436e74d74f2055faa35b8741048bba | Wed Feb 11 14:03:25 2015 +0200 | v1.10.1.0..HEAD
+patching file app/code/core/Mage/Admin/Model/Observer.php
+patching file app/code/core/Mage/Core/Controller/Request/Http.php
+patching file lib/Varien/Data/Collection/Db.php
+
+
