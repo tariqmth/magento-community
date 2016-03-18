@@ -386,7 +386,6 @@ class Mage_Core_Model_Resource_Setup
                         }
                     }
                 } catch (Exception $e){
-                    echo "<pre>".print_r($e,1)."</pre>";
                     throw Mage::exception('Mage_Core', Mage::helper('core')->__('Error in file: "%s" - %s', $sqlFile, $e->getMessage()));
                 }
                 if (method_exists($this->_conn, 'allowDdlCache')) {

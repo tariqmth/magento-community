@@ -372,8 +372,14 @@ class Varien_Data_Collection_Db extends Varien_Data_Collection
      */
     public function addFieldToFilter($field, $condition=null)
     {
-        $field = $this->_getMappedField($field);
-        $this->_select->where($this->_getConditionSql($field, $condition), null, Varien_Db_Select::TYPE_CONDITION);
+        $mappedField = $this->_getMappedField($field);
+
+        $quotedField = $mappedField;
+        if ($mappedField === $field) {
+            $quotedField = $this->getConnection()->quoteIdentifier($field);
+        }
+
+        $this->_select->where($this->_getConditionSql($quotedField, $condition), null, Varien_Db_Select::TYPE_CONDITION);
         return $this;
     }
 
@@ -421,7 +427,7 @@ class Varien_Data_Collection_Db extends Varien_Data_Collection
      * If non matched - sequential array is expected and OR conditions
      * will be built using above mentioned structure
      *
-     * @param string|array $fieldName
+     * @param string|array $fieldName Field name must be already escaped with Varien_Db_Adapter_Interface::quoteIdentifier()
      * @param integer|string|array $condition
      * @return string
      */

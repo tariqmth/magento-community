@@ -243,12 +243,17 @@ class Mage_Customer_AccountController extends Mage_Core_Controller_Front_Action
      */
     public function createPostAction()
     {
+        if (!$this->_validateFormKey()) {
+            $this->_redirectError(Mage::getUrl('*/*/create', array('_secure' => true)));
+            return;
+        }
+
         $session = $this->_getSession();
         if ($session->isLoggedIn()) {
             $this->_redirect('*/*/');
             return;
         }
-        $session->setEscapeMessages(true); // prevent XSS injection in user input
+
         if ($this->getRequest()->isPost()) {
             $errors = array();
 
@@ -332,7 +337,7 @@ class Mage_Customer_AccountController extends Mage_Core_Controller_Front_Action
                     $session->setCustomerFormData($this->getRequest()->getPost());
                     if (is_array($errors)) {
                         foreach ($errors as $errorMessage) {
-                            $session->addError($errorMessage);
+                            $session->addError(Mage::helper('core')->escapeHtml($errorMessage));
                         }
                     } else {
                         $session->addError($this->__('Invalid customer data'));
@@ -343,9 +348,8 @@ class Mage_Customer_AccountController extends Mage_Core_Controller_Front_Action
                 if ($e->getCode() === Mage_Customer_Model_Customer::EXCEPTION_EMAIL_EXISTS) {
                     $url = Mage::getUrl('customer/account/forgotpassword');
                     $message = $this->__('There is already an account with this email address. If you are sure that it is your email address, <a href="%s">click here</a> to get your password and access your account.', $url);
-                    $session->setEscapeMessages(false);
                 } else {
-                    $message = $e->getMessage();
+                    $message = Mage::helper('core')->escapeHtml($e->getMessage());
                 }
                 $session->addError($message);
             } catch (Exception $e) {
