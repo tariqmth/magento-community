@@ -44,7 +44,7 @@ class Mage_Adminhtml_Model_System_Config_Backend_Image_Favicon extends Mage_Admi
      * Token for the root part of directory path for uploading
      * 
      */
-    const UPLOAD_ROOT = 'system/filesystem/media';
+    const UPLOAD_ROOT = 'media';
 
     /**
      * Return path to directory for upload file
@@ -77,6 +77,17 @@ class Mage_Adminhtml_Model_System_Config_Backend_Image_Favicon extends Mage_Admi
      */
     protected function _getAllowedExtensions()
     {
-        return array('ico', 'png', 'gif', 'jpeg', 'apng', 'svg');
+        return array('ico', 'png', 'gif', 'jpg', 'jpeg', 'apng');
+    }
+
+    /**
+     * Get real media dir path
+     *
+     * @param  $token
+     * @return string
+     */
+    protected function _getUploadRoot($token)
+    {
+        return Mage::getBaseDir($token);
     }
 }

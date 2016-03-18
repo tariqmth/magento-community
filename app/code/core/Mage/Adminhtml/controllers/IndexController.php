@@ -189,35 +189,42 @@ class Mage_Adminhtml_IndexController extends Mage_Adminhtml_Controller_Action
 
     public function forgotpasswordAction()
     {
-        $email = $this->getRequest()->getParam('email');
+        $email = '';
         $params = $this->getRequest()->getParams();
-        if (!empty($email) && !empty($params)) {
-            $collection = Mage::getResourceModel('admin/user_collection');
-            /* @var $collection Mage_Admin_Model_Mysql4_User_Collection */
-            $collection->addFieldToFilter('email', $email);
-            $collection->load(false);
+        if (!empty($params)) {
+            $email = (string)$this->getRequest()->getParam('email');
 
-            if ($collection->getSize() > 0) {
-                foreach ($collection as $item) {
-                    $user = Mage::getModel('admin/user')->load($item->getId());
-                    if ($user->getId()) {
-                        $pass = Mage::helper('core')->getRandomString(7);
-                        $user->setPassword($pass);
-                        $user->save();
-                        $user->setPlainPassword($pass);
-                        $user->sendNewPasswordEmail();
-                        Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('adminhtml')->__('A new password was sent to your email address. Please check your email and click Back to Login.'));
-                        $email = '';
+            if ($this->_validateFormKey()) {
+                if (!empty($email)) {
+                    $collection = Mage::getResourceModel('admin/user_collection');
+                    /* @var $collection Mage_Admin_Model_Mysql4_User_Collection */
+                    $collection->addFieldToFilter('email', $email);
+                    $collection->load(false);
+
+                    if ($collection->getSize() > 0) {
+                        foreach ($collection as $item) {
+                            $user = Mage::getModel('admin/user')->load($item->getId());
+                            if ($user->getId()) {
+                                $pass = Mage::helper('core')->getRandomString(7);
+                                $user->setPassword($pass);
+                                $user->save();
+                                $user->setPlainPassword($pass);
+                                $user->sendNewPasswordEmail();
+                                Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('adminhtml')->__('A new password was sent to your email address. Please check your email and click Back to Login.'));
+                                $email = '';
+                            }
+                            break;
+                        }
+                    } else {
+                        Mage::getSingleton('adminhtml/session')->addError(Mage::helper('adminhtml')->__('Cannot find the email address.'));
                     }
-                    break;
+                } else {
+                    $this->_getSession()->addError($this->__('Invalid email address.'));
                 }
             } else {
-                Mage::getSingleton('adminhtml/session')->addError(Mage::helper('adminhtml')->__('Cannot find the email address.'));
+                $this->_getSession()->addError($this->__('Invalid Form Key. Please refresh the page.'));
             }
-        } elseif (!empty($params)) {
-            Mage::getSingleton('adminhtml/session')->addError(Mage::helper('adminhtml')->__('The email address is empty.'));
         }
-
 
         $data = array(
             'email' => $email
