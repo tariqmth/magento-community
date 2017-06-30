@@ -277,3 +277,8 @@ patching file app/code/core/Mage/Sales/Model/Quote/Item.php
 patching file lib/Varien/File/Uploader.php
 
 
+-e -n 2017-06-30 06:32:01 UTC | SUPEE-1533 | EE_1.12 | v1 | _ | n/a | SUPEE-1533_EE_1.12_v1.patch | REVERTED
+patching file app/code/core/Mage/Adminhtml/Block/Dashboard/Graph.php
+patching file app/code/core/Mage/Adminhtml/controllers/DashboardController.php
+
+
