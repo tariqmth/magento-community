@@ -1,11 +1,16 @@
-<IfModule mod_deflate.c>
+# SKYSTORE PATCHED 2-JUL-17
+# Author: tariq@retailexpress.com.au
+#
+# What is the problem?
+# Each Magento shop comes standard with several sections for administrative purposes (also called “back-end” or “admin panel”). 
+# These are by default located at /admin, /downloader
+# To exploit several known Magento vulnerabilities, a hacker would require the name of the admin panel. 
+# So it is best to make this secure.
+# this .htaccess actually Secure /downloader 
+#
+order deny,allow
+deny from all
 
-    RemoveOutputFilter DEFLATE
-    RemoveOutputFilter GZIP
-
-</IfModule>
-
-<Files ~ "\.(cfg|ini|xml)$">
-    order allow,deny
-    deny from all
-</Files> 
+# if you want to allow specific IP
+# Restrict access by IP-address
+# Allow from xxx.xxx.xxx.xxx
