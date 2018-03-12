@@ -1,4 +1,6 @@
 " in rows: "," in rows: "
+"Invalid value in SKU column. HTML tags are not allowed","Invalid value in SKU column. HTML tags are not allowed"
+"Incorrect entity type","Incorrect entity type"
 "-- Please Select --","-- Please Select --"
 "Adapter must be an instance of Mage_ImportExport_Model_Import_Adapter_Abstract","Adapter must be an instance of Mage_ImportExport_Model_Import_Adapter_Abstract"
 "Adapter type must be a non empty string","Adapter type must be a non empty string"
